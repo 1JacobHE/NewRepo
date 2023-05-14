@@ -28,6 +28,8 @@ typedef struct channel_coding* channel_coding_p;
 
 channel_coding_p channel_coding_new(param_p pa);
 
+int MODEM_utils_primes_is_prime(unsigned nr);
+
 unsigned MODEM_utils_primes_get_previous(unsigned nr);
 
 unsigned MODEM_interleave_q(unsigned length);

@@ -10,6 +10,9 @@
 
 #include <param.h>
 
+#include <trellis.h>
+#include <interleave.h>
+
 #include <memory.h>
 #include <string.h>
 #include <stdlib.h>
@@ -25,11 +28,11 @@ typedef struct channel_coding* channel_coding_p;
 
 channel_coding_p channel_coding_new(param_p pa);
 
-void conv();
+void channel_coding_convolve(const MODEM_trellis_t trellis, const MODEM_uint8_t* inp, unsigned inp_len, MODME_uint8_t* out);
 
-void ldpc();
+void channel_coding_ldpc();
 
-void interleave();
+void channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out);
 
 void channel_coding_free(channel_coding_p cs);
 

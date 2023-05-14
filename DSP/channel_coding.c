@@ -8,35 +8,7 @@
 #define _CHANNLE_CODING_C_
 
 #include <channel_coding.h>
-#include <trellis.h>
-#include <interleave.h>
 
-channel_coding_p channel_coding_new(param_p pa)
-{
-	channel_coding_p cc = MODEM_UTILS_MEMORY_NEW_ZERO(struct channel_coding, 1);
-
-    cc->channel_coding=pa->channel_coding_scheme;
-    cc->code_rate=pa->channel_coding_rate;
-    cc->interleave_enable=pa->interleave_enable;
-    return cc;
-}
-void ldpc();
-
-void
-MODEM_convolve(const MODEM_trellis_t trellis, const MODEM_uint8_t* inp, unsigned inp_len, MODME_uint8_t* out)
-{
-    unsigned state = 0;
-    unsigned idx = 0;
-    unsigned n = 0;
- 
-    for (n = 0; n < inp_len; ++n)
-    {
-        idx = state + inp[n] * state_count;
-        out[n << 1] = (outputs[idx] >> 1) & 1;
-        out[(n << 1) + 1] = (outputs[idx] & 1);
-        state = next_states[idx];
-    }
-}
 static const unsigned state_count = 256;
 
 static const MODEM_uint8_t outputs[] =
@@ -106,8 +78,38 @@ static const MODEM_uint8_t next_states[] =
   253, 253, 254, 254, 255, 255
 };
 
+static const unsigned c_prime_min = 5;
+
+channel_coding_p channel_coding_new(param_p pa)
+{
+	channel_coding_p cc = MODEM_UTILS_MEMORY_NEW_ZERO(struct channel_coding, 1);
+
+    cc->channel_coding=pa->channel_coding_scheme;
+    cc->code_rate=pa->channel_coding_rate;
+    cc->interleave_enable=pa->interleave_enable;
+    return cc;
+}
+void ldpc();
+
 void
-MODEM_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
+channel_coding_convolve(const MODEM_trellis_t trellis, const MODEM_uint8_t* inp, unsigned inp_len, MODME_uint8_t* out)
+{
+    unsigned state = 0;
+    unsigned idx = 0;
+    unsigned n = 0;
+ 
+    for (n = 0; n < inp_len; ++n)
+    {
+        idx = state + inp[n] * state_count;
+        out[n << 1] = (outputs[idx] >> 1) & 1;
+        out[(n << 1) + 1] = (outputs[idx] & 1);
+        state = next_states[idx];
+    }
+}
+
+
+void
+channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
 {
     unsigned prime = MODEM_interleave_q(inp_len);
     unsigned i = 0;
@@ -125,7 +127,7 @@ MODEM_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
     free(perm);
 }
 
-static const unsigned c_prime_min = 5;
+
 
 unsigned
 MODEM_utils_primes_get_previous(unsigned nr)

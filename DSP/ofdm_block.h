@@ -20,26 +20,26 @@
 
 //--------------------------------------------------------
 struct ofdm_block{
-	double 				bandwidth;
-	unsigned int 		subcarrier_number;
-	unsigned int 		data_subcarrier_number;
-	unsigned int 		pilot_subcarrier_number;
-	unsigned int 		null_subcarrier_number;
+	MODEM_real_p 		bandwidth;
+	MODEM_uint16_p 		subcarrier_number;
+	MODEM_uint16_p 		data_subcarrier_number;
+	MODEM_uint16_p 		pilot_subcarrier_number;
+	MODEM_uint16_p 		null_subcarrier_number;
 	const char* 		subcarrier_pattern;
 	const char* 		precoding;
 	const char* 		ZPorCP;
-	unsigned int 		ZPorCP_length;
+	MODEM_uint16_p 		ZPorCP_length;
 };
 
 typedef struct ofdm_block* ofdm_block_p;
 
 ofdm_block_p ofdm_block_new(param_p pa);
 
-void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length, unsigned int oversamping_factor, unsigned int input_size, MODEM_complex_p* input, MODEM_complex_p* output);
+void ofdm_block_add_ZPorCP(char* ZPorCP, MODEM_uint16_p ZPorCP_length, MODEM_uint16_p oversamping_factor, MODEM_uint16_p input_size, MODEM_complex_p* input, MODEM_complex_p* output);
 
-void ofdm_block_precoding(unsigned int K, MODEM_complex_p* input, MODEM_complex_p* output);
+void ofdm_block_precoding(MODEM_uint16_p K, MODEM_complex_p* input, MODEM_complex_p* output);
 
-void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p* input, MODEM_complex_p* output);
+void ofdm_block_ifft(MODEM_uint16_p ifft_size, MODEM_complex_p* input, MODEM_complex_p* output);
 
 void ofdm_block_free(ofdm_block_p block);
 

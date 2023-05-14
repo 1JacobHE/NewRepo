@@ -16,26 +16,26 @@
 #include <stdlib.h>
 
 struct frame{
-	unsigned int 		max_blocks_per_frame;
-	long long 			center_frequency;
-	unsigned int 		wakeup_tone_frequency;
-	unsigned int 		wakeup_tone_length;
+	MODEM_uint16_p 		max_blocks_per_frame;
+	MODEM_uint32_p 		center_frequency;
+	MODEM_uint16_p 		wakeup_tone_frequency;
+	MODEM_uint16_p 		wakeup_tone_length;
 	const char* 		leading1;
 	const char* 		leading2;	
-	double 				pad_length;
+	MODEM_real_p 		pad_length;
 };
 
 typedef struct frame* frame_p;
 
 frame_p frame_new(param_p pa);
 
-void frame_load_wakeup_tone(unsigned int wakeup_tone_length, unsigned int sampling_frequency, unsigned int start, MODEM_real_p* output);
+void frame_load_wakeup_tone(MODEM_uint16_p wakeup_tone_length, MODEM_uint32_p sampling_frequency, MODEM_uint32_p start, MODEM_real_p* output);
 
-void frame_load_leading1(unsigned int start, MODEM_real_p* output);
+void frame_load_leading1(MODEM_uint32_p start, MODEM_real_p* output);
 
-void frame_load_leading2(unsigned int start, MODEM_real_p* output);
+void frame_load_leading2(MODEM_uint32_p start, MODEM_real_p* output);
 
-void frame_set_pad(unsigned int pad_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output);
+void frame_set_pad(MODEM_uint16_p pad_length, MODEM_uint16_p oversampling_factor, MODEM_uint32_p start, MODEM_real_p* output);
 
 void frame_free(frame_p frame);
 

@@ -9,9 +9,9 @@
 
 #include <channel_coding.h>
 
-static const unsigned state_count = 256;
+static const MODEM_uint16_p state_count = 256;
 
-static const MODEM_uint8_t outputs[] =
+static const MODEM_uint8_p outputs[] =
 {
   0, 3, 2, 1, 0, 3, 2, 1, 2, 1, 0, 3, 2, 1, 0, 3, 1, 2, 3, 0, 1, 2, 3,
   0, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 1, 2, 3, 0, 1, 2,
@@ -38,7 +38,7 @@ static const MODEM_uint8_t outputs[] =
   0, 3, 2, 1, 0, 3
 };
 
-static const MODEM_uint8_t next_states[] =
+static const MODEM_uint8_p next_states[] =
 {
   0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10,
   11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19,
@@ -78,7 +78,7 @@ static const MODEM_uint8_t next_states[] =
   253, 253, 254, 254, 255, 255
 };
 
-static const unsigned c_prime_min = 5;
+static const MODEM_int16_p c_prime_min = 5;
 
 channel_coding_p channel_coding_new(param_p pa)
 {
@@ -95,11 +95,11 @@ void channel_coding_ldpc()
 
 }
 
-void channel_coding_convolve(const MODEM_uint8_p* inp, unsigned inp_len, MODEM_uint8_p* out)
+void channel_coding_convolve(const MODEM_uint8_p* inp, MODEM_uint16_p inp_len, MODEM_uint8_p* out)
 {
-    unsigned state = 0;
-    unsigned idx = 0;
-    unsigned n = 0;
+    MODEM_uint16_p state = 0;
+    MODEM_uint16_p idx = 0;
+    MODEM_uint16_p n = 0;
  
     for (n = 0; n < inp_len; ++n)
     {
@@ -111,11 +111,11 @@ void channel_coding_convolve(const MODEM_uint8_p* inp, unsigned inp_len, MODEM_u
 }
 
 
-void channel_coding_interleave(const MODEM_uint8_p* inp, unsigned inp_len, MODEM_uint8_p* out)
+void channel_coding_interleave(const MODEM_uint8_p* inp, MODEM_uint16_p inp_len, MODEM_uint8_p* out)
 {
-    unsigned prime = MODEM_interleave_q(inp_len);
-    unsigned i = 0;
-    unsigned* perm = (unsigned*)malloc(sizeof(unsigned) * inp_len);
+    MODEM_uint16_p prime = MODEM_interleave_q(inp_len);
+    MODEM_uint16_p i = 0;
+    MODEM_uint16_p* perm = (MODEM_uint16_p*)malloc(sizeof(MODEM_uint16_p) * inp_len);
 
     // Build permutation table.
     perm[0] = 0;
@@ -129,12 +129,12 @@ void channel_coding_interleave(const MODEM_uint8_p* inp, unsigned inp_len, MODEM
     free(perm);
 }
 
-int MODEM_utils_primes_is_prime(unsigned nr)
+MODEM_uint16_p MODEM_utils_primes_is_prime(MODEM_uint16_p nr)
 {
     return (c_prime_table[nr >> 4] & (1 << (nr & 15))) != 0;
 }
 
-unsigned MODEM_utils_primes_get_previous(unsigned nr)
+MODEM_uint16_p MODEM_utils_primes_get_previous(MODEM_uint16_p nr)
 {
     while (nr)
     {
@@ -147,12 +147,12 @@ unsigned MODEM_utils_primes_get_previous(unsigned nr)
     return 0;
 }
 
-unsigned MODEM_interleave_q(unsigned length)
+MODEM_uint16_p MODEM_interleave_q(MODEM_uint16_p length)
 {
     // Find the lowest prime number which is not a factor of length.
     // @fixme: there's something more to this.
-    unsigned k = c_prime_min;
-    unsigned prime = 0;
+    MODEM_uint16_p k = c_prime_min;
+    MODEM_uint16_p prime = 0;
 
     while (1)
     {

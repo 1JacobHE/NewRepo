@@ -32,23 +32,23 @@ constellation_p constellation_new(param_p pa)
 	return cm;
 }
 
-void constellation_constellate(int m, int* input, MODEM_complex* output, int len)
+void constellation_constellate(MODEM_uint16_p m, MODEM_uint16_p* input, MODEM_complex* output, MODEM_uint16_p len)
 {
-	int i;
-	int n = len;
-	int sym_length = n / m;
-	unsigned int Es = 1;
-	unsigned int delta = sqrt(3 * Es / (2 * (2 ^ m - 1)));
+	MODEM_uint16_p i;
+	MODEM_uint16_p n = len;
+	MODEM_uint16_p sym_length = n / m;
+	MODEM_uint16_p Es = 1;
+	MODEM_uint16_p delta = sqrt(3 * Es / (2 * (2 ^ m - 1)));
 
 	if (m == 2) {
-		int map[4] = { 0, 1, 3, 2 };
-		int temp = n % 2;
+		MODEM_uint16_p map[4] = { 0, 1, 3, 2 };
+		MODEM_uint16_p temp = n % 2;
 		if (temp != 0) {
 			n = n + 1;
 			input[n] = 0;
 		}
 
-		int sym_value[sym_length];
+		MODEM_uint16_p sym_value[sym_length];
 
 		for (i = 0; i < sym_length; i++) {
 			sym_value[i] = input[i * m] * 2 + input[i * m + 1];
@@ -62,10 +62,10 @@ void constellation_constellate(int m, int* input, MODEM_complex* output, int len
 	}
 	else if (m == 4)
 	{
-		double map[4] = { -3 * delta, -1 * delta, 3 * delta, 1 * delta };
+		MODEM_real_p map[4] = { -3 * delta, -1 * delta, 3 * delta, 1 * delta };
 
-		double sym_value_inphase[sym_length];
-		double sym_value_quadrature[sym_length];
+		MODEM_real_p sym_value_inphase[sym_length];
+		MODEM_real_p sym_value_quadrature[sym_length];
 		for (i = 0; i < sym_length; i++) {
 			sym_value_inphase[i] = map[input[i * m + 1] + input[i * m] * 2];
 			sym_value_quadrature[i] = map[input[i * m + 3] + input[i * m + 2] * 2];
@@ -74,10 +74,10 @@ void constellation_constellate(int m, int* input, MODEM_complex* output, int len
 		}
 	}
 	else if (m == 6) {
-		double map[8] = { -7 * delta, -5 * delta, -1 * delta, -3 * delta, 7 * delta, 5 * delta, 1 * delta, 3 * delta };
+		MODEM_real_p map[8] = { -7 * delta, -5 * delta, -1 * delta, -3 * delta, 7 * delta, 5 * delta, 1 * delta, 3 * delta };
 
-		double sym_value_inphase[sym_length];
-		double sym_value_quadrature[sym_length];
+		MODEM_real_p sym_value_inphase[sym_length];
+		MODEM_real_p sym_value_quadrature[sym_length];
 		for (i = 0; i < sym_length; i++) {
 			sym_value_inphase[i] = map[input[i * m + 2] + input[i * m + 1] * 2 + input[i * m] * 4];
 			sym_value_quadrature[i] = map[input[i * m + 5] + input[i * m + 4] * 2 + input[i * m + 3] * 4];

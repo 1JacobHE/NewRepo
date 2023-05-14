@@ -25,9 +25,9 @@ frame_p frame_new(param_p pa)
 	return frame;
 }
 
-void frame_load_wakeup_tone(unsigned int wakeup_tone_length, unsigned int sampling_frequency, unsigned int start, MODEM_real_p* output)
+void frame_load_wakeup_tone(MODEM_uint16_p wakeup_tone_length, MODEM_uint32_p sampling_frequency, MODEM_uint32_p start, MODEM_real_p* output)
 {
-	unsigned int samples = wakeup_tone_length * sampling_frequency;
+	MODEM_uint32_p samples = wakeup_tone_length * sampling_frequency;
 
 	FILE* file = fopen("Fs44100/wakeup_tone.txt", "r");
 	if (file == NULL) {
@@ -35,7 +35,7 @@ void frame_load_wakeup_tone(unsigned int wakeup_tone_length, unsigned int sampli
 		return;
 	}
 
-	unsigned int i = 0;
+	MODEM_uint32_p i = 0;
 	while (fscanf(file, "%lf", &output[i + start]) != EOF && i < samples) {
 		i++;
 	}
@@ -43,7 +43,7 @@ void frame_load_wakeup_tone(unsigned int wakeup_tone_length, unsigned int sampli
 	fclose(file);
 }
 
-void frame_load_leading1(unsigned int start, MODEM_real_p* output)
+void frame_load_leading1(MODEM_uint32_p start, MODEM_real_p* output)
 {
 	FILE* file = fopen("Fs44100/LFM.txt", "r");
 	if (file == NULL) {
@@ -51,7 +51,7 @@ void frame_load_leading1(unsigned int start, MODEM_real_p* output)
 		return;
 	}
 
-	unsigned int i = 0;
+	MODEM_uint32_p i = 0;
 	while (fscanf(file, "%lf", &output[i + start]) != EOF) {
 		i++;
 	}
@@ -59,7 +59,7 @@ void frame_load_leading1(unsigned int start, MODEM_real_p* output)
 	fclose(file);
 }
 
-void frame_load_leading2(unsigned int start, MODEM_real_p* output)
+void frame_load_leading2(MODEM_uint32_p start, MODEM_real_p* output)
 {
 	FILE* file = fopen("Fs44100/mSeq.txt", "r");
 	if (file == NULL) {
@@ -67,7 +67,7 @@ void frame_load_leading2(unsigned int start, MODEM_real_p* output)
 		return;
 	}
 
-	unsigned int i = 0;
+	MODEM_uint32_p i = 0;
 	while (fscanf(file, "%lf", &output[i + start]) != EOF) {
 		i++;
 	}
@@ -75,11 +75,11 @@ void frame_load_leading2(unsigned int start, MODEM_real_p* output)
 	fclose(file);
 }
 
-void frame_set_pad(unsigned int pad_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
+void frame_set_pad(MODEM_uint16_p pad_length, MODEM_uint16_p oversampling_factor, MODEM_uint32_p start, MODEM_real_p* output)
 {
-	int samples = pad_length * oversampling_factor;
+	MODEM_uint32_p samples = pad_length * oversampling_factor;
 
-	unsigned int i;
+	MODEM_uint32_p i;
 	for (i = 0; i < samples; i++) {
 		output[i + start] = 0;
 	}

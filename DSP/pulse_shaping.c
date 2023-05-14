@@ -19,17 +19,17 @@ pulse_shaping_p pulse_shaping_new(param_p pa)
     return ps;
 }
 
-void root_raised_cosine(double* csf, int Nb, double beta) {
-    int Nfilt = 2;
-    int len = 2 * Nfilt * Nb + 1;
-    double T = 1.0;
-    double* x = (double*)malloc(len * sizeof(double));
-    double* y = (double*)malloc(len * sizeof(double));
-    double* numerator = (double*)malloc(len * sizeof(double));
-    double* denominator = (double*)malloc(len * sizeof(double));
+void root_raised_cosine(MODEM_real_p* csf, MODEM_uint16_p Nb, MODEM_real_p beta) {
+    MODEM_uint16_p Nfilt = 2;
+    MODEM_uint16_p len = 2 * Nfilt * Nb + 1;
+    MODEM_real_p T = 1.0;
+    MODEM_real_p* x = (MODEM_real_p*)malloc(len * sizeof(MODEM_real_p));
+    MODEM_real_p* y = (MODEM_real_p*)malloc(len * sizeof(MODEM_real_p));
+    MODEM_real_p* numerator = (MODEM_real_p*)malloc(len * sizeof(MODEM_real_p));
+    MODEM_real_p* denominator = (MODEM_real_p*)malloc(len * sizeof(MODEM_real_p));
 
     for (int i = 0; i < len; ++i) {
-        x[i] = -Nfilt + i / (double)Nb;
+        x[i] = -Nfilt + i / (MODEM_real_p)Nb;
         numerator[i] = sin(M_PI * (1 - beta) * x[i] / T) + (4 * beta * x[i] / T) * cos(M_PI * (1 + beta) * x[i] / T);
         denominator[i] = sqrt(T) * (M_PI * x[i] / T) * (1 - (4 * beta * x[i] / T) * (4 * beta * x[i] / T));
 
@@ -44,13 +44,14 @@ void root_raised_cosine(double* csf, int Nb, double beta) {
         }
     }
 
-    double norm = 0;
-    for (int i = 0; i < len; ++i) {
+    MODEM_real_p norm = 0;
+    MODEM_uint16_p i;
+    for (i = 0; i < len; ++i) {
         norm += y[i] * y[i];
     }
     norm = sqrt(norm);
 
-    for (int i = 0; i < len; ++i) {
+    for (i = 0; i < len; ++i) {
         csf[i] = y[i] / norm;
     }
 
@@ -61,14 +62,14 @@ void root_raised_cosine(double* csf, int Nb, double beta) {
 }
 
 // Âö³å³ÉÐÍº¯Êý
-void pulse_shaping_shape(MODEM_complex_p* symbol, MODEM_complex_p* shaped_symbol, int filter_length) {
-    double* filter = (double*)malloc(filter_length * sizeof(double));
+void pulse_shaping_shape(MODEM_complex_p* symbol, MODEM_complex_p* shaped_symbol, MODEM_uint16_p filter_length) {
+    MODEM_real_p* filter = (MODEM_real_p*)malloc(filter_length * sizeof(MODEM_real_p));
     root_raised_cosine(filter, filter_length, 0.2);
 
-    int i, j;
+    MODEM_uint16_p i, j;
     for (i = 0; i < filter_length; i++) {
-        float real_part = symbol[0] * filter[i];
-        float imag_part = symbol[1] * filter[i];
+        MODEM_real_p real_part = symbol[0] * filter[i];
+        MODEM_real_p imag_part = symbol[1] * filter[i];
         for (j = i; j > 0; j--) {
             shaped_symbol[2 * j] += real_part;
             shaped_symbol[2 * j + 1] += imag_part;

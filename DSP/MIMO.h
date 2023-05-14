@@ -12,11 +12,12 @@
 
 #include <memory.h>
 #include <stdlib.h>
+#include <MODEM_types.h>
 
 //--------------------------------------------------------
 struct MIMO{
-	unsigned int transducers;
-    unsigned int hydrophones;
+	MODEM_uint16_p transducers;
+	MODEM_uint16_p hydrophones;
 };
 
 typedef struct MIMO* MIMO_p;

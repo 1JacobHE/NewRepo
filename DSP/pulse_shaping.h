@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <MODEM_complex.h>
+#include <MODEM_types.h>
 
 struct pulse_shaping{
 	const char* pulse_shaping;
@@ -24,9 +25,9 @@ typedef struct pulse_shaping* pulse_shaping_p;
 
 pulse_shaping_p pulse_shaping_new(param_p pa);
 
-void root_raised_cosine(double* csf, int Nb, double beta);
+void root_raised_cosine(MODEM_real_p* csf, MODEM_uint16_p Nb, MODEM_real_p beta);
 
-void pulse_shaping_shape(MODEM_complex_p* symbol, MODEM_complex_p* shaped_symbol, int filter_length); // input one symbol, output one shaped symbol
+void pulse_shaping_shape(MODEM_complex_p* symbol, MODEM_complex_p* shaped_symbol, MODEM_uint16_p filter_length); // input one symbol, output one shaped symbol
 
 void pulse_shaping_free(pulse_shaping_p ps);
 

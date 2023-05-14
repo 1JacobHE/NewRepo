@@ -13,9 +13,10 @@
 #include <memory.h>
 #include <string.h>
 #include <stdlib.h>
+#include <MODEM_types.h>
 
 struct stream{
-	long long sampling_frequency;
+	MODEM_uint32_p sampling_frequency;
 };
 
 typedef struct stream* stream_p;

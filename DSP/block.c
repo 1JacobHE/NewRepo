@@ -19,7 +19,7 @@ block_p block_new(param_p pa) {
 	return block;
 }
 
-void block_load_pilot(unsigned int start, MODEM_real_p* output)
+void block_load_pilot(MODEM_uint16_p start, MODEM_real_p* output)
 {
     FILE* file = fopen("Fs44100/block_pilot.txt", "r");
     if (file == NULL) {
@@ -27,7 +27,7 @@ void block_load_pilot(unsigned int start, MODEM_real_p* output)
         return;
     }
 
-    unsigned int i = 0;
+    MODEM_uint16_p i = 0;
     while (fscanf(file, "%lf", &output[i + start]) != EOF) {
         i++;
     }
@@ -35,11 +35,11 @@ void block_load_pilot(unsigned int start, MODEM_real_p* output)
     fclose(file);
 }
 
-void block_set_guard(unsigned int guard_interval, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
+void block_set_guard(MODEM_uint16_p guard_interval, MODEM_uint16_p oversampling_factor, MODEM_uint32_p start, MODEM_real_p* output)
 {
-    int samples = guard_interval * oversampling_factor;
+    MODEM_uint16_p samples = guard_interval * oversampling_factor;
 
-    unsigned int i;
+    MODEM_uint16_p i;
     for (i = 0; i < samples; i++) {
         output[i + start] = 0;
     }

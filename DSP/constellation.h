@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <MODEM_types.h>
 
 struct constellation
 {
@@ -25,7 +26,7 @@ typedef struct constellation* constellation_p;
 
 constellation_p constellation_new(param_p pa);
 
-void constellation_constellate(int m, int* input, MODEM_complex* output, int len);
+void constellation_constellate(MODEM_uint16_p m, MODEM_uint16_p* input, MODEM_complex* output, MODEM_uint16_p len);
 
 void constellation_free(constellation_p cm);
 

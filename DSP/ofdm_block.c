@@ -50,7 +50,31 @@ void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, u
 
 void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex_p** output)
 {
+		FILE* file = fopen("precoding_matrix.txt", "r");
+		if (file == NULL) {
+			printf("Failed to open file.\n");
+			return;
+		}
 
+		MODEM_complex_p** matrix = (MODEM_complex_p**)malloc(K * sizeof(MODEM_complex_p));
+		MODEM_complex_p* temp = (MODEM_complex_p*)malloc(sizeof(MODEM_complex_p));
+
+		for (int i = 0; i < K; ++i) {
+			for (int j = 0; j < K; ++j) {
+				fscanf(file, "%lf, %lf", &matrix[j][0], &matrix[j][1]);
+			}
+			output[i][0] = 0;
+			output[i][1] = 0;
+			for (int j = 0; j < K; ++j) {
+				MODEM_complex_mul(input[i], matrix[i], temp);
+				output[i][0] += temp[0];
+				output[i][1] += temp[1];
+			}
+		}
+
+		fclose(file);
+		free(matrix);
+		free(temp);
 }
 
 void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p** input, MODEM_complex_p** output)

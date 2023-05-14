@@ -129,8 +129,7 @@ void channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM
     free(perm);
 }
 
-int
-MODEM_utils_primes_is_prime(unsigned nr)
+int MODEM_utils_primes_is_prime(unsigned nr)
 {
     return (c_prime_table[nr >> 4] & (1 << (nr & 15))) != 0;
 }

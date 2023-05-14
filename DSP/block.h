@@ -13,7 +13,6 @@
 #include <memory.h>
 #include <string.h>
 
-//--------------------------------------------------------
 struct block{
 	const char* 		pilot_scheme;
 	unsigned int 		pilot_length;

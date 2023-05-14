@@ -10,8 +10,6 @@
 
 #include <constellation.h>
 
-#define PI 3.141592653589
-
 constellation_p constellation_new(param_p pa)
 {
 	constellation_p cm = MODEM_UTILS_MEMORY_NEW_ZERO(struct constellation, 1);
@@ -58,8 +56,8 @@ void constellation_constellate(int m, int* input, MODEM_complex** output, int le
 
 		for (i = 0; i < sym_length; i++) {
 			sym_value[i] = map[sym_value[i]];
-			output[i][0] = cos(PI / 2 * sym_value[i]);
-			output[i][1] = sin(PI / 2 * sym_value[i]);
+			output[i][0] = cos(M_PI / 2 * sym_value[i]);
+			output[i][1] = sin(M_PI / 2 * sym_value[i]);
 		}
 	}
 	else if (m == 4)
@@ -88,10 +86,6 @@ void constellation_constellate(int m, int* input, MODEM_complex** output, int le
 		}
 	}
 }
-
-
-
-
 
 void constellation_free(constellation_p cm)
 {

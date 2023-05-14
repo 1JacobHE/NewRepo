@@ -19,38 +19,55 @@ pulse_shaping_p pulse_shaping_new(param_p pa)
     return ps;
 }
 
-#define FILTER_LENGTH 101  // 滤波器长度
-#define SYMBOL_RATE 100    // 符号速率
-#define ROLLOFF_FACTOR 0.5 // 滚降因子
+void root_raised_cosine(double* csf, int Nb, double beta) {
+    int Nfilt = 2;
+    int len = 2 * Nfilt * Nb + 1;
+    double T = 1.0;
+    double* x = (double*)malloc(len * sizeof(double));
+    double* y = (double*)malloc(len * sizeof(double));
+    double* numerator = (double*)malloc(len * sizeof(double));
+    double* denominator = (double*)malloc(len * sizeof(double));
 
-// Raised Cosine滤波器
-void raised_cosine_filter(float* filter) {
-    int i;
-    float t;
-    float T = 1.0 / SYMBOL_RATE;
-    float alpha = ROLLOFF_FACTOR;
+    for (int i = 0; i < len; ++i) {
+        x[i] = -Nfilt + i / (double)Nb;
+        numerator[i] = sin(M_PI * (1 - beta) * x[i] / T) + (4 * beta * x[i] / T) * cos(M_PI * (1 + beta) * x[i] / T);
+        denominator[i] = sqrt(T) * (M_PI * x[i] / T) * (1 - (4 * beta * x[i] / T) * (4 * beta * x[i] / T));
 
-    for (i = 0; i < FILTER_LENGTH; i++) {
-        t = (i - FILTER_LENGTH / 2) * T;
-        if (t == 0) {
-            filter[i] = 1.0;
+        if (x[i] == 0) {
+            y[i] = (1 - beta + 4 * beta / M_PI) / sqrt(T);
         }
-        else if (fabs(t) == T / (2 * alpha)) {
-            filter[i] = alpha / (2 * sqrt(2.0));
+        else if ((1 - (4 * beta * x[i] / T) * (4 * beta * x[i] / T)) == 0) {
+            y[i] = beta * ((1 + 2 / M_PI) * sin(M_PI / (4 * beta)) + (1 - 2 / M_PI) * cos(M_PI / (4 * beta))) / sqrt(2 * T);
         }
         else {
-            filter[i] = (sin(2 * M_PI * t / T * (1 - alpha)) + 4 * alpha * t / T * cos(2 * M_PI * t / T * (1 + alpha))) / (M_PI * t / T * (1 - (4 * alpha * t / T) * (4 * alpha * t / T)));
+            y[i] = numerator[i] / denominator[i];
         }
     }
+
+    double norm = 0;
+    for (int i = 0; i < len; ++i) {
+        norm += y[i] * y[i];
+    }
+    norm = sqrt(norm);
+
+    for (int i = 0; i < len; ++i) {
+        csf[i] = y[i] / norm;
+    }
+
+    free(x);
+    free(y);
+    free(numerator);
+    free(denominator);
 }
 
+
 // 脉冲成型函数
-void pulse_shaping(float* symbol, float* shaped_symbol) {
-    float filter[FILTER_LENGTH];
-    raised_cosine_filter(filter);
+void pulse_shaping_shape(MODEM_complex_p** symbol, MODEM_complex_p** shaped_symbol, int filter_length) {
+    double* filter = (double*)malloc(filter_length * sizeof(double));
+    root_raised_cosine(filter, filter_length, 0.2);
 
     int i, j;
-    for (i = 0; i < FILTER_LENGTH; i++) {
+    for (i = 0; i < filter_length; i++) {
         float real_part = symbol[0] * filter[i];
         float imag_part = symbol[1] * filter[i];
         for (j = i; j > 0; j--) {

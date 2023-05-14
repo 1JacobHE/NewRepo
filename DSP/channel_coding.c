@@ -89,10 +89,13 @@ channel_coding_p channel_coding_new(param_p pa)
     cc->interleave_enable=pa->interleave_enable;
     return cc;
 }
-void ldpc();
 
-void
-channel_coding_convolve(const MODEM_trellis_t trellis, const MODEM_uint8_t* inp, unsigned inp_len, MODME_uint8_t* out)
+void channel_coding_ldpc()
+{
+
+}
+
+void channel_coding_convolve(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
 {
     unsigned state = 0;
     unsigned idx = 0;
@@ -108,8 +111,7 @@ channel_coding_convolve(const MODEM_trellis_t trellis, const MODEM_uint8_t* inp,
 }
 
 
-void
-channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
+void channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
 {
     unsigned prime = MODEM_interleave_q(inp_len);
     unsigned i = 0;
@@ -129,8 +131,7 @@ channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint
 
 
 
-unsigned
-MODEM_utils_primes_get_previous(unsigned nr)
+unsigned MODEM_utils_primes_get_previous(unsigned nr)
 {
     while (nr)
     {
@@ -143,8 +144,7 @@ MODEM_utils_primes_get_previous(unsigned nr)
     return 0;
 }
 
-unsigned
-MODEM_interleave_q(unsigned length)
+unsigned MODEM_interleave_q(unsigned length)
 {
     // Find the lowest prime number which is not a factor of length.
     // @fixme: there's something more to this.

@@ -28,7 +28,11 @@ typedef struct channel_coding* channel_coding_p;
 
 channel_coding_p channel_coding_new(param_p pa);
 
-void channel_coding_convolve(const MODEM_trellis_t trellis, const MODEM_uint8_t* inp, unsigned inp_len, MODME_uint8_t* out);
+unsigned MODEM_utils_primes_get_previous(unsigned nr);
+
+unsigned MODEM_interleave_q(unsigned length);
+
+void channel_coding_convolve(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out);
 
 void channel_coding_ldpc();
 

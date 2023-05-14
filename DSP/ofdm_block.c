@@ -66,7 +66,7 @@ void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex
 			output[i][0] = 0;
 			output[i][1] = 0;
 			for (int j = 0; j < K; ++j) {
-				MODEM_complex_mul(input[i], matrix[i], temp);
+				MODEM_complex_mul(input[i], matrix[i], temp);a
 				output[i][0] += temp[0];
 				output[i][1] += temp[1];
 			}

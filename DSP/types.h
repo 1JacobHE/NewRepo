@@ -9,21 +9,21 @@
 //! @{
 
 //! Signed 8-bit integer.
-typedef signed char        MODEM_int8_t;
+typedef signed char        MODEM_int8_p;
 //! Unsigned 8-bit integer.
-typedef unsigned char      MODEM_uint8_t;
+typedef unsigned char      MODEM_uint8_p;
 //! Signed 16-bit integer.
-typedef signed short       MODEM_int16_t;
+typedef signed short       MODEM_int16_p;
 //! Unsigned 16-bit integer.
-typedef unsigned short     MODEM_uint16_t;
+typedef unsigned short     MODEM_uint16_p;
 //! Signed 32-bit integer.
-typedef signed int         MODEM_int32_t;
+typedef signed int         MODEM_int32_p;
 //! Unsigned 32-bit integer.
-typedef unsigned int       MODEM_uint32_t;
+typedef unsigned int       MODEM_uint32_p;
 //! Signed 64-bit integer.
-typedef signed long long   MODEM_int64_t;
+typedef signed long long   MODEM_int64_p;
 //! Unsigned 64-bit integer.
-typedef unsigned long long MODEM_uint64_t;
+typedef unsigned long long MODEM_uint64_p;
 
 //! Return the maximum of a and b.
 #define MODEM_MAX(a, b) (((a) > (b)) ? a : b)

@@ -14,6 +14,7 @@
 #include <string.h>
 #include <MODEM_types.h>
 #include <stdlib.h>
+#include <MODEM_complex.h>
 
 //--------------------------------------------------------
 struct ofdm_block{
@@ -31,6 +32,12 @@ struct ofdm_block{
 typedef struct ofdm_block* ofdm_block_p;
 
 ofdm_block_p ofdm_block_new(param_p pa);
+
+void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length, unsigned int oversmpling_factor, MODEM_complex_p** input, MODEM_complex_p** output);
+
+void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex_p** output);
+
+void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p** input, MODEM_complex_p** output);
 
 void ofdm_block_free(ofdm_block_p block);
 

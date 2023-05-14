@@ -38,7 +38,7 @@ void block_load_pilot(unsigned int pilot_length, unsigned int oversampling_facto
 
 void block_set_guard(unsigned int guard_interval, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
 {
-    int samples = pilot_length * oversampling_factor;
+    int samples = guard_interval * oversampling_factor;
 
     unsigned int i;
     for (i = 0; i < samples; i++) {

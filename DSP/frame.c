@@ -25,24 +25,29 @@ frame_p frame_new(param_p pa)
 	return frame;
 }
 
-void frame_load_wakeup_tone(short* wut)
+void frame_load_wakeup_tone(unsigned int wakeup_tone_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
 {
 
 }
 
-void frame_load_leading1(short* lead)
+void frame_load_leading1(unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
 {
 
 }
 
-void frame_load_leading2(short* lead)
+void frame_load_leading2(unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
 {
 
 }
 
-void frame_set_pad(short* pad)
+void frame_set_pad(unsigned int pad_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
 {
-	
+	int samples = pad_length * oversampling_factor;
+
+	unsigned int i;
+	for (i = 0; i < samples; i++) {
+		output[i + start] = 0;
+	}
 }
 
 void frame_free(frame_p frame)

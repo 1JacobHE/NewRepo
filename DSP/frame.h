@@ -12,7 +12,7 @@
 
 #include <memory.h>
 #include <string.h>
-#include <types.h>
+#include <MODEM_types.h>
 #include <stdlib.h>
 
 //--------------------------------------------------------

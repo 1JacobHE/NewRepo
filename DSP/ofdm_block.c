@@ -27,6 +27,37 @@ ofdm_block_p ofdm_block_new(param_p pa)
 	return block;
 }
 
+void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p** input, MODEM_complex_p** output)
+{
+	int i = 0;
+	if (strcmp(ZPorCP, "ZP")) {
+		for (i = 0; i < ZPorCP_length_in_sample; i++) {
+			output[i][0] = 0;
+			output[i][1] = 0;
+		}
+	}
+	else if (strcmp(ZPorCP, "CP")) {
+		for (i = 0; i < ZPorCP_length_in_sample; i++) {
+			output[i][0] = input[i + input_size - ZPorCP_length_in_sample][0];
+			output[i][1] = input[i + input_size - ZPorCP_length_in_sample][1];
+		}
+	}
+	for (i = 0; i < input_size; i++) {
+		output[i + ZPorCP_length_in_sample][0] = input[i][0];
+		output[i + ZPorCP_length_in_sample][1] = input[i][1];
+	}
+}
+
+void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex_p** output)
+{
+
+}
+
+void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p** input, MODEM_complex_p** output)
+{
+
+}
+
 void ofdm_block_free(ofdm_block_p block)
 {
   MODEM_UTILS_MEMORY_FREE(block);

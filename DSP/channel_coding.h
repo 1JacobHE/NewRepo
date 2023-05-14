@@ -10,12 +10,10 @@
 
 #include <param.h>
 
-#include <trellis.h>
-#include <interleave.h>
-
 #include <memory.h>
 #include <string.h>
 #include <stdlib.h>
+#include <MODEM_types.h>
 
 struct channel_coding
 {
@@ -34,11 +32,11 @@ unsigned MODEM_utils_primes_get_previous(unsigned nr);
 
 unsigned MODEM_interleave_q(unsigned length);
 
-void channel_coding_convolve(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out);
+void channel_coding_convolve(const MODEM_uint8_p* inp, unsigned inp_len, MODEM_uint8_p* out);
 
 void channel_coding_ldpc();
 
-void channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out);
+void channel_coding_interleave(const MODEM_uint8_p* inp, unsigned inp_len, MODEM_uint8_p* out);
 
 void channel_coding_free(channel_coding_p cs);
 

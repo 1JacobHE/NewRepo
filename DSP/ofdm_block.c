@@ -4,6 +4,9 @@
  *  Created on: 2023.5.12
  *      Author: admin
  */
+#include <stdio.h>
+#include <stdlib.h>
+#include <fftw3.h>
 
 #ifndef _OFDM_BLOCK_C_
 #define _OFDM_BLOCK_C_
@@ -57,7 +60,7 @@ void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex
 		}
 
 		MODEM_complex_p** matrix = (MODEM_complex_p**)malloc(K * sizeof(MODEM_complex_p));
-		MODEM_complex_p* temp = (MODEM_complex_p*)malloc(sizeof(MODEM_complex_p));
+		MODEM_complex_p temp;
 
 		for (int i = 0; i < K; ++i) {
 			for (int j = 0; j < K; ++j) {
@@ -66,7 +69,7 @@ void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex
 			output[i][0] = 0;
 			output[i][1] = 0;
 			for (int j = 0; j < K; ++j) {
-				MODEM_complex_mul(input[i], matrix[i], temp);a
+				MODEM_complex_mul(input[i], matrix[i], temp);
 				output[i][0] += temp[0];
 				output[i][1] += temp[1];
 			}
@@ -74,11 +77,35 @@ void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex
 
 		fclose(file);
 		free(matrix);
-		free(temp);
 }
 
 void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p** input, MODEM_complex_p** output)
 {
+	// Allocate memory for the input and output arrays
+	fftw_complex* in = (fftw_complex*)fftw_malloc(ifft_size * sizeof(fftw_complex));
+	fftw_complex* out = (fftw_complex*)fftw_malloc(ifft_size * sizeof(fftw_complex));
+
+	// Create FFTW plan for IFFT
+	fftw_plan plan = fftw_plan_dft_1d(ifft_size, in, out, FFTW_BACKWARD, FFTW_ESTIMATE);
+
+	// Perform IFFT on each column of the input array
+	for (j = 0; j < 2; j++) { // Loop for real and imaginary parts
+		for (i = 0; i < ifft_size; i++) {
+			in[i] = (*input)[i][j];
+		}
+
+		fftw_execute(plan); // Perform IFFT
+
+		for (i = 0; i < ifft_size; i++) {
+			(*output)[i][0].real = creal(out[i]);
+			(*output)[i][1].imag = cimag(out[i]);
+		}
+	}
+
+	// Clean up FFTW resources
+	fftw_destroy_plan(plan);
+	fftw_free(in);
+	fftw_free(out);
 
 }
 

@@ -30,7 +30,7 @@ ofdm_block_p ofdm_block_new(param_p pa)
 	return block;
 }
 
-void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p* input, MODEM_complex_p** output)
+void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p* input, MODEM_complex_p* output)
 {
 	int i = 0;
 	if (strcmp(ZPorCP, "ZP")) {
@@ -51,7 +51,7 @@ void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, u
 	}
 }
 
-void ofdm_block_precoding(unsigned int K, MODEM_complex_p* input, MODEM_complex_p** output)
+void ofdm_block_precoding(unsigned int K, MODEM_complex_p* input, MODEM_complex_p* output)
 {
 		FILE* file = fopen("precoding_matrix.txt", "r");
 		if (file == NULL) {
@@ -59,7 +59,7 @@ void ofdm_block_precoding(unsigned int K, MODEM_complex_p* input, MODEM_complex_
 			return;
 		}
 
-		MODEM_complex_p** matrix = (MODEM_complex_p**)malloc(K * sizeof(MODEM_complex_p));
+		MODEM_complex_p* matrix = (MODEM_complex_p*)malloc(K * sizeof(MODEM_complex_p));
 		MODEM_complex_p temp;
 
 		for (int i = 0; i < K; ++i) {
@@ -79,7 +79,7 @@ void ofdm_block_precoding(unsigned int K, MODEM_complex_p* input, MODEM_complex_
 		free(matrix);
 }
 
-void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p* input, MODEM_complex_p** output)
+void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p* input, MODEM_complex_p* output)
 {
 	// Allocate memory for the input and output arrays
 	fftw_complex* in = (fftw_complex*)fftw_malloc(ifft_size * sizeof(fftw_complex));

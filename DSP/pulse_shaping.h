@@ -26,7 +26,7 @@ pulse_shaping_p pulse_shaping_new(param_p pa);
 
 void root_raised_cosine(double* csf, int Nb, double beta);
 
-void pulse_shaping_shape(MODEM_complex_p** symbol, MODEM_complex_p** shaped_symbol, int filter_length); // input one symbol, output one shaped symbol
+void pulse_shaping_shape(MODEM_complex_p* symbol, MODEM_complex_p* shaped_symbol, int filter_length); // input one symbol, output one shaped symbol
 
 void pulse_shaping_free(pulse_shaping_p ps);
 

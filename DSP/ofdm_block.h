@@ -33,11 +33,11 @@ typedef struct ofdm_block* ofdm_block_p;
 
 ofdm_block_p ofdm_block_new(param_p pa);
 
-void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p** input, MODEM_complex_p** output);
+void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p* input, MODEM_complex_p* output);
 
-void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex_p** output);
+void ofdm_block_precoding(unsigned int K, MODEM_complex_p* input, MODEM_complex_p* output);
 
-void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p** input, MODEM_complex_p** output);
+void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p* input, MODEM_complex_p* output);
 
 void ofdm_block_free(ofdm_block_p block);
 

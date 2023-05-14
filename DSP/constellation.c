@@ -32,7 +32,7 @@ constellation_p constellation_new(param_p pa)
 	return cm;
 }
 
-void constellation_constellate(int m, int* input, MODEM_complex** output, int len)
+void constellation_constellate(int m, int* input, MODEM_complex* output, int len)
 {
 	int i;
 	int n = len;

@@ -61,7 +61,7 @@ void root_raised_cosine(double* csf, int Nb, double beta) {
 }
 
 // Âö³å³ÉÐÍº¯Êý
-void pulse_shaping_shape(MODEM_complex_p** symbol, MODEM_complex_p** shaped_symbol, int filter_length) {
+void pulse_shaping_shape(MODEM_complex_p* symbol, MODEM_complex_p* shaped_symbol, int filter_length) {
     double* filter = (double*)malloc(filter_length * sizeof(double));
     root_raised_cosine(filter, filter_length, 0.2);
 

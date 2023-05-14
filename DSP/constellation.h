@@ -25,7 +25,7 @@ typedef struct constellation* constellation_p;
 
 constellation_p constellation_new(param_p pa);
 
-void constellation_constellate(int m, int* input, MODEM_complex** output, int len);
+void constellation_constellate(int m, int* input, MODEM_complex* output, int len);
 
 void constellation_free(constellation_p cm);
 

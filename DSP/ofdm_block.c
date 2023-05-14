@@ -30,7 +30,7 @@ ofdm_block_p ofdm_block_new(param_p pa)
 	return block;
 }
 
-void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p** input, MODEM_complex_p** output)
+void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p* input, MODEM_complex_p** output)
 {
 	int i = 0;
 	if (strcmp(ZPorCP, "ZP")) {
@@ -51,7 +51,7 @@ void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, u
 	}
 }
 
-void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex_p** output)
+void ofdm_block_precoding(unsigned int K, MODEM_complex_p* input, MODEM_complex_p** output)
 {
 		FILE* file = fopen("precoding_matrix.txt", "r");
 		if (file == NULL) {
@@ -79,7 +79,7 @@ void ofdm_block_precoding(unsigned int K, MODEM_complex_p** input, MODEM_complex
 		free(matrix);
 }
 
-void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p** input, MODEM_complex_p** output)
+void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p* input, MODEM_complex_p** output)
 {
 	// Allocate memory for the input and output arrays
 	fftw_complex* in = (fftw_complex*)fftw_malloc(ifft_size * sizeof(fftw_complex));
@@ -89,16 +89,16 @@ void ofdm_block_ifft(unsigned int ifft_size, MODEM_complex_p** input, MODEM_comp
 	fftw_plan plan = fftw_plan_dft_1d(ifft_size, in, out, FFTW_BACKWARD, FFTW_ESTIMATE);
 
 	// Perform IFFT on each column of the input array
-	for (j = 0; j < 2; j++) { // Loop for real and imaginary parts
 		for (i = 0; i < ifft_size; i++) {
-			in[i] = (*input)[i][j];
+			in[i][0] = input[i][0];
+			in[i][1] = input[i][1];
 		}
 
 		fftw_execute(plan); // Perform IFFT
 
 		for (i = 0; i < ifft_size; i++) {
-			(*output)[i][0].real = creal(out[i]);
-			(*output)[i][1].imag = cimag(out[i]);
+			output[i][0] = out[i][0];
+			output[i][1] = out[i][1];
 		}
 	}
 

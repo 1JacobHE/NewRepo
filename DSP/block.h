@@ -12,6 +12,7 @@
 
 #include <memory.h>
 #include <string.h>
+#include <MODEM_types.h>
 
 struct block{
 	const char* 		pilot_scheme;
@@ -23,7 +24,9 @@ typedef struct block* block_p;
 
 block_p block_new(param_p pa);
 
-void block_load_pilot(short* pilot); // 将指针添加pilot后返回
+void block_load_pilot(unsigned int pilot_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output);
+
+void block_set_guard(unsigned int guard_interval, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output);
 
 void block_free(block_p block);
 

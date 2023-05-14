@@ -4,9 +4,6 @@
  *  Created on: 2023.5.12
  *      Author: admin
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <fftw3.h>
 
 #ifndef _OFDM_BLOCK_C_
 #define _OFDM_BLOCK_C_
@@ -30,9 +27,10 @@ ofdm_block_p ofdm_block_new(param_p pa)
 	return block;
 }
 
-void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length_in_sample, unsigned int input_size, MODEM_complex_p* input, MODEM_complex_p* output)
+void ofdm_block_add_ZPorCP(char* ZPorCP, unsigned int ZPorCP_length, unsigned int oversamping_factor, unsigned int input_size, MODEM_complex_p* input, MODEM_complex_p* output)
 {
 	int i = 0;
+	unsigned int ZPorCP_length_in_sample = ZPorCP_length * oversamping_factor;
 	if (strcmp(ZPorCP, "ZP")) {
 		for (i = 0; i < ZPorCP_length_in_sample; i++) {
 			output[i][0] = 0;

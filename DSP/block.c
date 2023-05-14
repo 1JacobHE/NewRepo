@@ -19,9 +19,31 @@ block_p block_new(param_p pa) {
 	return block;
 }
 
-void block_load_pilot(short* pilot)
+void block_load_pilot(unsigned int pilot_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
 {
-	
+    int samples = pilot_length * oversampling_factor;
+    FILE* file = fopen("block_pilot.txt", "r");
+    if (file == NULL) {
+        printf("Failed to open the file.\n");
+        return;
+    }
+
+    unsigned int i = 0;
+    while (fscanf(file, "%lf", &output[i + start]) != EOF && i < samples) {
+        i++;
+    }
+
+    fclose(file);
+}
+
+void block_set_guard(unsigned int guard_interval, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
+{
+    int samples = pilot_length * oversampling_factor;
+
+    unsigned int i;
+    for (i = 0; i < samples; i++) {
+        output[i + start] = 0;
+    }
 }
 
 void block_free(block_p block) {

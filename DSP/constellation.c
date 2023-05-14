@@ -10,7 +10,7 @@
 
 #include <constellation.h>
 
-#define PI 3.1415926
+#define PI 3.141592653589
 
 constellation_p constellation_new(param_p pa)
 {

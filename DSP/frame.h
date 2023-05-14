@@ -30,11 +30,11 @@ typedef struct frame* frame_p;
 
 frame_p frame_new(param_p pa);
 
-void frame_load_wakeup_tone(unsigned int wakeup_tone_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output); // 将指针填充wut后返回
+void frame_load_wakeup_tone(unsigned int wakeup_tone_length, unsigned int sampling_frequency, unsigned int start, MODEM_real_p* output); // 将指针填充wut后返回
 
-void frame_load_leading1(unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output); // 将指针填充leading1后返回
+void frame_load_leading1(unsigned int start, MODEM_real_p* output); // 将指针填充leading1后返回
 
-void frame_load_leading2(unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output); // 将指针填充leading2后返回
+void frame_load_leading2(unsigned int start, MODEM_real_p* output); // 将指针填充leading2后返回
 
 void frame_set_pad(unsigned int pad_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output); // 将指针填充pad后返回
 

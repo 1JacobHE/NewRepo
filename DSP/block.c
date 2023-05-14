@@ -22,7 +22,8 @@ block_p block_new(param_p pa) {
 void block_load_pilot(unsigned int pilot_length, unsigned int oversampling_factor, unsigned int start, MODEM_real_p* output)
 {
     int samples = pilot_length * oversampling_factor;
-    FILE* file = fopen("block_pilot.txt", "r");
+
+    FILE* file = fopen("Fs44100\block_pilot.txt", "r");
     if (file == NULL) {
         printf("Failed to open the file.\n");
         return;

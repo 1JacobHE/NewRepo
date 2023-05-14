@@ -1,0 +1,13 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "precode_scheme.h": "c",
+        "memory.h": "c",
+        "pulse_shaping.h": "c",
+        "code_scheme.h": "c",
+        "constellation_map.h": "c",
+        "param.h": "c",
+        "ofdm_block.h": "c",
+        "goertzel.h": "c"
+    }
+}

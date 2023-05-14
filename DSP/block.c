@@ -21,7 +21,7 @@ block_p block_new(param_p pa) {
 
 void block_load_pilot(short* pilot)
 {
-	
+	aaa;
 }
 
 void block_free(block_p block) {

@@ -3,6 +3,9 @@
 
 #include <MODEM_types.h>
 
+#include <stdlib.h>
+#include <MODEM_types.h>
+
 typedef MODEM_real_p MODEM_complex_p[2];
 
 void

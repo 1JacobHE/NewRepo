@@ -5,21 +5,7 @@
  *      Author: admin
  */
 
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-
-#include <param.h>
-#include <MIMO.h>
-#include <frame.h>
-#include <MIMO.h>
-#include <block.h>
-#include <ofdm_block.h>
-#include <channel_coding.h>
-#include <constellation.h>
-#include <pulse_shaping.h>
-#include <stream.h>
-
+#include <MODEM_tx.h>
 
 MODEM_tx_execute(param_p param, MIMO_p MIMO, frame_p frame, block_p block, ofdm_block_p ofdm_block, channel_coding_p channel_coding, 
 	constellation_p constellation, pulse_shaping_p pulse_shaping, stream_p stream, unsigned short* output, int* len_output)

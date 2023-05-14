@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <MODEM_complex.h>
 
 struct pulse_shaping{
 	const char* pulse_shaping;

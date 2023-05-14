@@ -1,7 +1,9 @@
 #ifndef MODEM_COMPLEX_C_INCLUDED_
 #define MODEM_COMPLEX_C_INCLUDED_
-#include <MODEM/complex.h>
+
+#include <MODEM_complex.h>
 #include <stdlib.h>
+#include <MODEM_types.h>
 
 void
 MODEM_complex_new(const MODEM_real_p a, const MODEM_real_p b, MODEM_complex_p c)

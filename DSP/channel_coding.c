@@ -95,7 +95,7 @@ void channel_coding_ldpc()
 
 }
 
-void channel_coding_convolve(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
+void channel_coding_convolve(const MODEM_uint8_p* inp, unsigned inp_len, MODEM_uint8_p* out)
 {
     unsigned state = 0;
     unsigned idx = 0;
@@ -111,7 +111,7 @@ void channel_coding_convolve(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_u
 }
 
 
-void channel_coding_interleave(const MODEM_uint8_t* inp, unsigned inp_len, MODEM_uint8_t* out)
+void channel_coding_interleave(const MODEM_uint8_p* inp, unsigned inp_len, MODEM_uint8_p* out)
 {
     unsigned prime = MODEM_interleave_q(inp_len);
     unsigned i = 0;

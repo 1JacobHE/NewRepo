@@ -45,7 +45,7 @@ typedef float MODEM_real_t;
 #  define MODEM_REAL_EPSILON    FLT_EPSILON
 #else
 //! Double precision floating point type.
-typedef double MODEM_real_t;
+typedef double MODEM_real_p;
 //! Utility macro to append a suffix to a function call.
 #  define MODEM_REAL_SUFFIX(a) a
 //! Utility macro to append a suffix to a number literal.
@@ -78,7 +78,7 @@ typedef float MODEM_hiprecision_t;
 #  define MODEM_HIPRECISION_FMT       "%f"
 #else
 //! Double precision floating point type.
-typedef double MODEM_hiprecision_t;
+typedef double MODEM_hiprecision_p;
 //! Utility macro to append a suffix to a function call.
 #  define MODEM_HIPRECISION_SUFFIX(a) a
 //! Utility macro to append a suffix to a number literal.
